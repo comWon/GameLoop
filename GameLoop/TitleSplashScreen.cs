@@ -11,7 +11,7 @@ namespace GameLoop
     {
         StateSystem _system;
         double _currentRotation = 0;
-
+        double _Multiplier = 50;
         public TitleSplashScreen(StateSystem system)
         {
             _system = system;
@@ -30,18 +30,18 @@ namespace GameLoop
             Gl.Begin(PrimitiveType.TriangleStrip);
             {
                 Gl.Color4(1.0, 0.0, 0.0, 0.5);
-                Gl.Vertex3(.5, 0.5, 0.5); //A
+                Gl.Vertex3(.5* _Multiplier, 0.5* _Multiplier, 0.5* _Multiplier); //A
                 Gl.Color4(0.0, 1.0, 0.0, 0.5);
-                Gl.Vertex3(-0.5, -0.5, 0.5); //B
-                 Gl.Color4(0.0, 0.0, 1.0, 0.5);
-                Gl.Vertex3(-0.5, 0.5, -0.5); //C
+                Gl.Vertex3(-0.5*_Multiplier, -0.5 * _Multiplier, 0.5 * _Multiplier); //B
+                Gl.Color4(0.0, 0.0, 1.0, 0.5);
+                Gl.Vertex3(-0.5 * _Multiplier, 0.5 * _Multiplier, -0.5 * _Multiplier); //C
                 Gl.Color4(1.0, 1.0, 1.0, 0.5);
-                Gl.Vertex3(.5, -.5, -.5); //D
-                Gl.Color4(1.0, 0.0, 0.0, 0.5);
-                Gl.Vertex3(.5, 0.5, 0.5); //A
+                Gl.Vertex3(.5 * _Multiplier, -.5 * _Multiplier, -.5 * _Multiplier); //D
+                Gl.Color4(1.0, 0.0, 0.0, 0.5*_Multiplier);
+                Gl.Vertex3(.5 * _Multiplier, 0.5 * _Multiplier, 0.5 * _Multiplier); //A
                 Gl.Color4(0.0, 1.0, 0.0, 0.5);
-                Gl.Vertex3(-0.5, -0.5, 0.5); //B
-                Gl.Color4(0.0, 1.0, 0.0, 0.5);
+                Gl.Vertex3(-0.5 * _Multiplier, -0.5 * _Multiplier, 0.5 * _Multiplier); //B
+                
             }
             Gl.End();
 
