@@ -22,18 +22,30 @@ namespace GameLoop
 
         public Form1()
         {
-            _fastLoop = new FastLoop(GameLoop);
+            //Generate Working Properties
             LoadStateSystem();
             InitializeComponent();
+            SetUp2Dgraphics(ClientSize.Width, ClientSize.Height);
+
+            //Start OpenGL
             _openGLControl.InitializeLifetimeService();
 
+            //Start StateSystem (splash screen)
             _system.ChangeState("splash");
 
+            //Set Starting Sizes
             if (_fullscreen)
             {
                 FormBorderStyle = FormBorderStyle.None;
                 WindowState = FormWindowState.Maximized;
             }
+            else
+            {
+                ClientSize = new Size(1280, 960);
+            }
+
+            //Start GameLoop
+            _fastLoop = new FastLoop(GameLoop);
         }
 
         private void LoadStateSystem()
@@ -55,6 +67,19 @@ namespace GameLoop
         {
             base.OnClientSizeChanged(e);
             Gl.Viewport(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            SetUp2Dgraphics(ClientSize.Width, ClientSize.Height);
+        }
+
+        private void SetUp2Dgraphics(double width, double height)
+        {
+            double halfWidth = width / 2;
+            double halfHeight = height / 2;
+
+            Gl.MatrixMode(MatrixMode.Projection);
+            Gl.LoadIdentity();
+            Gl.Ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -100, 100);
+            Gl.MatrixMode(MatrixMode.Modelview);
+            Gl.LoadIdentity();
         }
     }
 }

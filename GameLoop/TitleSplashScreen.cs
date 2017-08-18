@@ -30,21 +30,18 @@ namespace GameLoop
             Gl.Begin(PrimitiveType.TriangleStrip);
             {
                 Gl.Color4(1.0, 0.0, 0.0, 0.5);
-                Gl.Vertex3(.5, 0.5, 0.5);
+                Gl.Vertex3(.5, 0.5, 0.5); //A
                 Gl.Color4(0.0, 1.0, 0.0, 0.5);
-                Gl.Vertex3(-0.5, -0.5, 0.5);
-                Gl.Color4(0.0, 0.0, 1.0, 0.5);
-                Gl.Vertex3(-0.5, 0.5, -0.5);
+                Gl.Vertex3(-0.5, -0.5, 0.5); //B
+                 Gl.Color4(0.0, 0.0, 1.0, 0.5);
+                Gl.Vertex3(-0.5, 0.5, -0.5); //C
                 Gl.Color4(1.0, 1.0, 1.0, 0.5);
-                Gl.Vertex3(.5, -.5, -.5);
+                Gl.Vertex3(.5, -.5, -.5); //D
                 Gl.Color4(1.0, 0.0, 0.0, 0.5);
-                Gl.Vertex3(.5, 0.5, 0.5);
+                Gl.Vertex3(.5, 0.5, 0.5); //A
                 Gl.Color4(0.0, 1.0, 0.0, 0.5);
-                Gl.Vertex3(-0.5, -0.5, 0.5);
-                //(+1, +1, +1);
-                //(−1, −1, +1);
-                //(−1, +1, −1);
-                //(+1, −1, −1).
+                Gl.Vertex3(-0.5, -0.5, 0.5); //B
+                Gl.Color4(0.0, 1.0, 0.0, 0.5);
             }
             Gl.End();
 
