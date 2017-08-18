@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameLoop
 {
-    interface IGameObject
+    public interface IGameObject
     {
         void Update(double elapsedTime);
         void Render();

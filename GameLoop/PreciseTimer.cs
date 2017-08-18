@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 /// Check if inbuilt option exists
 /// </summary>
 
-namespace StartingGraphics
+namespace GameLoop
 {
     public class PreciseTimer
     {

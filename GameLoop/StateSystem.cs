@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace GameLoop
 {
-    class StateSystem
+    public class StateSystem
     {
         Dictionary<string, IGameObject> _stateStore = new Dictionary<string, IGameObject>();
         IGameObject _CurrentState = null;
-        IGameObject _nullIGameObject = null;
+   
+        public StateSystem()
+        {
+
+        }
 
         public void Update (double elapsedTime)
         {
@@ -24,7 +28,7 @@ namespace GameLoop
 
         public void AddState (string stateId, IGameObject state)
         {
-            if (_stateStore.Where(f => f.Key == stateId).Count() == 0) {
+            if (!_stateStore.ContainsKey(stateId)) {
                 _stateStore.Add(stateId, state);
             }
             else
@@ -37,9 +41,9 @@ namespace GameLoop
 
         public void ChangeState(string stateId)
         {
-            if (_stateStore.Where(f => f.Key == stateId).Count() != 0)
+            if (_stateStore.ContainsKey(stateId))
             {
-               _CurrentState= _stateStore.First(f => f.Key==stateId).Value;
+               _CurrentState= _stateStore[stateId];
             }
             else
             {
@@ -47,5 +51,12 @@ namespace GameLoop
                 throw e;
             }
         }
+
+        public bool Exists (string stateId)
+        {
+            return _stateStore.ContainsKey(stateId);
+        }
+
+        public IGameObject CurrentState() => _CurrentState;
     }
 }

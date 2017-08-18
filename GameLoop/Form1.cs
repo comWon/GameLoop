@@ -9,20 +9,25 @@ using System.Text;
 using System.Windows.Forms;
 
 
-namespace StartingGraphics
+namespace GameLoop
 {
     public partial class Form1 : Form
     {
         FastLoop _fastLoop;
         bool _fullscreen = false;
+    
+        StateSystem _system = new StateSystem();
+
+        public GlControl OpenGLControl { get => _openGLControl; set => _openGLControl = value; }
 
         public Form1()
         {
             _fastLoop = new FastLoop(GameLoop);
-
+            LoadStateSystem();
             InitializeComponent();
             _openGLControl.InitializeLifetimeService();
 
+            _system.ChangeState("splash");
 
             if (_fullscreen)
             {
@@ -31,40 +36,25 @@ namespace StartingGraphics
             }
         }
 
+        private void LoadStateSystem()
+        {
+            _system.AddState("splash", new SplashScreen(_system));
+            _system.AddState("titleMenu", new TitleSplashScreen(_system));
+
+        }
+
         void GameLoop(double elapsedTime)
         {
-            Gl.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            Gl.Clear( ClearBufferMask.ColorBufferBit);
-
-            // Uncomment this line to make the point bigger
-            //Gl.glPointSize(5.0f); 
-
-            //Gl.Begin(Gl.POINTS);
-            //{
-            //    Gl.Vertex3(0, 0, 1);
-            //}
-            //Gl.End();
-
-            // Uncomment these lines to draw a triangle
-
-            //// Uncomment this line to rotate the triangle
-            // //Gl.Rotate(10 * elapsedTime, 0, 1, 0);
-            //Gl.Begin((PrimitiveType)Gl.TRIANGLES);
-            //{
-            //    Gl.Color3(1.0, 0.0, 0.0);
-            //    Gl.Vertex3(-0.5, 0, 0);
-            //    Gl.Color3(0.0, 1.0, 0.0);
-            //    Gl.Vertex3(0.5, 0, 0);
-            //    Gl.Color3(0.0, 0.0, 1.0);
-            //    Gl.Vertex3(0, 0.5, 0);
-            //}
-            //Gl.End();
-
-            
-
-            Gl.Finish();
+            _system.Update(elapsedTime);
+            _system.Render();
             _openGLControl.Refresh();
 
+        }
+
+        protected override void OnClientSizeChanged(EventArgs e)
+        {
+            base.OnClientSizeChanged(e);
+            Gl.Viewport(0, 0, this.ClientSize.Width, this.ClientSize.Height);
         }
     }
 }

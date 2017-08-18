@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="orderedtest1" storage="c:\users\steve\source\repos\gameloop\unittestproject1\orderedtest1.orderedtest" id="7f85eb89-a054-4d0a-8d40-251cb5b8bd88" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="83f9a077-cfdb-76c0-29cb-2225c0bdfb53" name="AddState" storage="bin\debug\unittestproject1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="cd773b61-0561-69c5-d6f9-c09e65c23b8d" name="AddStateTwice" storage="bin\debug\unittestproject1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="13b89f55-bdc5-ef37-6674-f93196c7ebdd" name="SetSplashScreenFromNew" storage="bin\debug\unittestproject1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>
