@@ -10,5 +10,6 @@ namespace GameLoop
     {
         void Update(double elapsedTime);
         void Render();
+        void Render(int fbo_screen);
     }
 }

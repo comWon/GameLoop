@@ -21,6 +21,11 @@ namespace GameLoop
             if (_CurrentState == null) { return; } else { _CurrentState.Update(elapsedTime); }
         }
 
+        public void Render(int fbo_screen)
+        {
+            if (_CurrentState == null) { return; } else { _CurrentState.Render( fbo_screen); }
+        }
+
         public void Render ()
         {
             if (_CurrentState == null) { return; } else { _CurrentState.Render(); }

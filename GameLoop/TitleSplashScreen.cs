@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenGL;
+using OpenTK.Graphics.OpenGL;
 
 namespace GameLoop
 {
@@ -21,31 +21,37 @@ namespace GameLoop
         public void Render()
         {
             //White Screen (Check colours 1-256 or 0 to 255?)
-            Gl.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            Gl.Clear(ClearBufferMask.ColorBufferBit);
+            GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            Gl.PointSize(5.0f);
+            GL.PointSize(5.0f);
 
-            Gl.Rotate(_currentRotation, 0, 1, 0);
-            Gl.Begin(PrimitiveType.TriangleStrip);
+            GL.Rotate(_currentRotation, 0, 1, 0);
+            GL.Begin(PrimitiveType.TriangleStrip);
             {
-                Gl.Color4(1.0, 0.0, 0.0, 0.5);
-                Gl.Vertex3(.5* _Multiplier, 0.5* _Multiplier, 0.5* _Multiplier); //A
-                Gl.Color4(0.0, 1.0, 0.0, 0.5);
-                Gl.Vertex3(-0.5*_Multiplier, -0.5 * _Multiplier, 0.5 * _Multiplier); //B
-                Gl.Color4(0.0, 0.0, 1.0, 0.5);
-                Gl.Vertex3(-0.5 * _Multiplier, 0.5 * _Multiplier, -0.5 * _Multiplier); //C
-                Gl.Color4(1.0, 1.0, 1.0, 0.5);
-                Gl.Vertex3(.5 * _Multiplier, -.5 * _Multiplier, -.5 * _Multiplier); //D
-                Gl.Color4(1.0, 0.0, 0.0, 0.5*_Multiplier);
-                Gl.Vertex3(.5 * _Multiplier, 0.5 * _Multiplier, 0.5 * _Multiplier); //A
-                Gl.Color4(0.0, 1.0, 0.0, 0.5);
-                Gl.Vertex3(-0.5 * _Multiplier, -0.5 * _Multiplier, 0.5 * _Multiplier); //B
+                GL.Color4(1.0, 0.0, 0.0, 0.5);
+                GL.Vertex3(.5* _Multiplier, 0.5* _Multiplier, 0.5* _Multiplier); //A
+                GL.Color4(0.0, 1.0, 0.0, 0.5);
+                GL.Vertex3(-0.5*_Multiplier, -0.5 * _Multiplier, 0.5 * _Multiplier); //B
+                GL.Color4(0.0, 0.0, 1.0, 0.5);
+                GL.Vertex3(-0.5 * _Multiplier, 0.5 * _Multiplier, -0.5 * _Multiplier); //C
+                GL.Color4(1.0, 1.0, 1.0, 0.5);
+                GL.Vertex3(.5 * _Multiplier, -.5 * _Multiplier, -.5 * _Multiplier); //D
+                GL.Color4(1.0, 0.0, 0.0, 0.5*_Multiplier);
+                GL.Vertex3(.5 * _Multiplier, 0.5 * _Multiplier, 0.5 * _Multiplier); //A
+                GL.Color4(0.0, 1.0, 0.0, 0.5);
+                GL.Vertex3(-0.5 * _Multiplier, -0.5 * _Multiplier, 0.5 * _Multiplier); //B
                 
             }
-            Gl.End();
+            GL.End();
 
-            Gl.Finish();
+            GL.Finish();
+        }
+
+        public void Render(int fbo_screen)
+        {
+            GL.BindFramebuffer(FramebufferTarget.FramebufferExt, fbo_screen);
+            Render();
         }
 
         //Note no graphical code at all in Update - all handled in render. steps may becalled out of sync

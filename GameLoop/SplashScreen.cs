@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenGL;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace GameLoop
 {
@@ -22,9 +23,15 @@ namespace GameLoop
         public void Render()
         {
             //White Screen (Check colours 1-256 or 0 to 255?)
-            Gl.ClearColor(1, 1, 1, 1);
-            Gl.Clear(ClearBufferMask.ColorBufferBit);
-            Gl.Finish();
+            GL.ClearColor(1, 1, 1, 1);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.Finish();
+        }
+
+        public void Render(int fbo_screen)
+        {
+            GL.BindFramebuffer(FramebufferTarget.FramebufferExt, fbo_screen);
+            Render();
         }
 
         public void Update(double elapsedTime)
