@@ -16,7 +16,8 @@ namespace GameLoop
         {
             _textureManager = textureManager;
         }
-
+        double _currentRotation = 0;
+        double _Multiplier = 50;
 
         #region IGameObject Parts 
         public void Render()
@@ -32,6 +33,7 @@ namespace GameLoop
             GL.LoadMatrix(ref modelview);
 
 
+            GL.Rotate(_currentRotation, 0, 1, 0);
 
 
             //Size
@@ -47,8 +49,9 @@ namespace GameLoop
 
             //Texture
             GL.Enable(EnableCap.Texture2D);
-            _texture = _textureManager.Get("face");
-
+            _texture = _textureManager.Get("alphaface");
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             //TrianGLes
             GL.BindTexture(TextureTarget.Texture2D, (uint)_texture.Id);
@@ -80,7 +83,7 @@ namespace GameLoop
 
         public void Update(double elapsedTime)
         {
-            
+            _currentRotation += 10 * elapsedTime;
         }
 #endregion
     }

@@ -42,7 +42,7 @@ namespace GameLoop
 
             Title = "Generic Title";
 
-            GL.ClearColor(Color.CornflowerBlue);
+            GL.ClearColor(new Color4(0,0,128,0));
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
             LoaderManager();
@@ -50,21 +50,17 @@ namespace GameLoop
 
         public void LoaderManager()
         {
-
+            
+            //Graphics loader
+            SetUp2Dgraphics(1280, 960);
+            LoadImageLibrary();
 
             //Generate Working Properties
 
             LoadStateSystem();
             
-            //Start GameLoop
-            //_fastLoop = new FastLoop(GameLoop);
-
-            //Graphics loader
-            SetUp2Dgraphics(1280, 960);
-            LoadImageLibrary();
-
             //Start StateSystem (splash screen)
-            _system.ChangeState("sprite");
+            _system.ChangeState("TestSprite");
 
             ////Set Starting Sizes
             //if (_fullscreen)
@@ -86,7 +82,7 @@ namespace GameLoop
             
 
             _textureManager.LoadTexture("face", @"Assets\face.tif");
-
+            _textureManager.LoadTexture("alphaface", @"Assets\face_alpha.tif");
         }
 
         private void LoadStateSystem()
@@ -94,6 +90,7 @@ namespace GameLoop
             _system.AddState("splash", new SplashScreen(_system));
             _system.AddState("titleMenu", new TitleSplashScreen(_system));
             _system.AddState("sprite", new DrawSpriteState(_textureManager));
+            _system.AddState("TestSprite", new TestSpriteClassState(_textureManager));
         }
 
         //void GameLoop(double elapsedTime)
