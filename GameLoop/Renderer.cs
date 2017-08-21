@@ -31,41 +31,27 @@ namespace GameLoop
 
             }
 
+        Batch _batch = new Batch();
+
         public void DrawSprite(Sprite sprite)
         {
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
-
-            Texture texture = sprite.Texture;
-
-            //Console.Write(GL.GetInteger(GetPName.TextureBinding2D)) ;
-
-            GL.BindTexture
-                (TextureTarget.Texture2D, (uint)texture.Id);
-
-            GL.Begin(PrimitiveType.Triangles);
-            {
-
-
-               
-                for (int i =0; i < Sprite.VertexAmount; i++)
-                {
-                    DrawImmediateModeVertex(sprite.VertexPositions[i], sprite.VertexColors[i], sprite.VertexUVs[i]);
-                }
-
-                
-            }
-            GL.End();
+            _batch.AddSprite(sprite);
         }
+
+        public void Render()
+        {
+            _batch.Draw();
+        }
+
+
 
         public void DrawText(Text text)
         {
-            foreach(CharacterSprite s in text.CharacterSprites)
+            foreach (CharacterSprite c in text.CharacterSprites)
             {
-                DrawSprite(s.Sprite);
+                DrawSprite(c.Sprite);
             }
+
         }
     }
 }

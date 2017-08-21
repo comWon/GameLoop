@@ -16,10 +16,14 @@ namespace GameLoop
         int _Direction = -1;
         double _Pulse = 200;
 
+        Font _font;
+        Text _header;
+
+
         public TestSpriteClassState(TextureManager textureManager)
         {
             _textureManager = textureManager;
-            _testSprite.Texture = _textureManager.Get("face");
+            _testSprite.Texture = _textureManager.Get("alphaface");
             _testSprite.SetHeight(15);
             _testSprite.SetWidth(15);
 
@@ -27,15 +31,32 @@ namespace GameLoop
             _testSprite2.SetHeight(200);
             _testSprite2.SetWidth(200);
             _testSprite2.SetColor(new Color(1, 0, 0, (float)1));
+
+            _font = new Font(textureManager.Get("font"),
+    FontParser.Parse(@"Assets\font.fnt"));
+            _header = new Text("Hello", _font);
+            _header.SetScale(.25);
+            _header.Position(-150, -50);
         }
 
         public void Render()
         {
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             GL.Clear( ClearBufferMask.ColorBufferBit );
+
+            //Need to render batches 1 text at a time
+            GL.BindTexture(TextureTarget.Texture2D, _testSprite2.Texture.Id);
             _renderer.DrawSprite(_testSprite2);
+            //_renderer.Render();
+
+            //GL.BindTexture(TextureTarget.Texture2D, _testSprite.Texture.Id);
             _renderer.DrawSprite(_testSprite);
-            GL.Finish();
+            _renderer.Render();
+
+            //And Text render from here
+            GL.BindTexture(TextureTarget.Texture2D, _textureManager.Get("font").Id);
+            _renderer.DrawText(_header);
+            _renderer.Render();
         }
 
         public void Render(int fbo_screen)

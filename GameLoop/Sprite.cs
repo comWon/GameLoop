@@ -88,12 +88,12 @@ namespace GameLoop
             return _vertexPositions[0].Y - _vertexPositions[2].Y;
         }
 
-        public void SetWidth(float width)
+        public void SetWidth(double width)
         {
             InitVertexPositions(GetCenter(), width, GetHeight());
         }
 
-        public void SetHeight(float height)
+        public void SetHeight(double height)
         {
             InitVertexPositions(GetCenter(), GetWidth(), height);
         }
@@ -130,5 +130,10 @@ namespace GameLoop
 
         }
 
+        public void SetScale (double v)
+        {
+            SetHeight(GetHeight() * v);
+            SetWidth(GetWidth() * v);
+        }
     }
 }

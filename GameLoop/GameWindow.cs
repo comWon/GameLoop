@@ -87,12 +87,11 @@ namespace GameLoop
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
-            GL.LoadIdentity();
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo_screen);
+          //  GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo_screen);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             _system.Update(preciseTimer.GetElapsedTime());
-            _system.Render(fbo_screen);
+            _system.Render(); //fbo_screen
             SwapBuffers();
         }
 

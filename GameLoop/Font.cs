@@ -35,6 +35,23 @@ namespace GameLoop
 
             return new CharacterSprite(sprite, charData);
         }
+        public Vector MeasureFont(string text)
+        {
+            return MeasureFont(text, -1);
+        }
+
+        public Vector MeasureFont(string text, double maxWidth)
+        {
+            Vector dimensions = new Vector();
+
+            foreach (char c in text)
+            {
+                CharacterData data = _characterData[c];
+                dimensions.X += data.XAdvance;
+                dimensions.Y = Math.Max(dimensions.Y, data.Height + data.YOffset);
+            }
+            return dimensions;
+        }
     }
 
 
