@@ -116,7 +116,7 @@ namespace GameLoop
             }
         }
 
-        private void SetUVs(Point topLeft, Point bottomRight)
+        public void SetUVs(Point topLeft, Point bottomRight)
         {
             // TopLeft, TopRight, BottomLeft
             _vertexUVs[0] = topLeft;

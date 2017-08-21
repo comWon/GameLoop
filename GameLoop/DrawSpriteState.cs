@@ -24,7 +24,7 @@ namespace GameLoop
         {
             //Buffer clear 
 
-            GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.ColorBufferBit | OpenTK.Graphics.OpenGL.ClearBufferMask.DepthBufferBit);
+            GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
 
             //Camera View 

@@ -14,7 +14,7 @@ using OpenTK;
 
 namespace GameLoop
 {
-    public partial class GameWindow : OpenTK.GameWindow
+    public class GameWindow : OpenTK.GameWindow
     {
         //FastLoop _fastLoop;
         PreciseTimer preciseTimer = new PreciseTimer();
@@ -36,13 +36,13 @@ namespace GameLoop
         TextureManager _textureManager = new TextureManager();
 
 
-        protected override void  OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
             Title = "Generic Title";
 
-            GL.ClearColor(new Color4(0,0,128,0));
+            GL.ClearColor(new Color4(0, 0, 128, 0));
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
             LoaderManager();
@@ -50,7 +50,7 @@ namespace GameLoop
 
         public void LoaderManager()
         {
-            
+
             //Graphics loader
             SetUp2Dgraphics(1280, 960);
             LoadImageLibrary();
@@ -58,31 +58,21 @@ namespace GameLoop
             //Generate Working Properties
 
             LoadStateSystem();
-            
+
             //Start StateSystem (splash screen)
             _system.ChangeState("TestSprite");
 
-            ////Set Starting Sizes
-            //if (_fullscreen)
-            //{
-            //    FormBorderStyle = FormBorderStyle.None;
-            //    WindowState = FormWindowState.Maximized;
-            //}
-            //else
-            //{
-            //    ClientSize = new Size(1280, 960);
-            //    SetUp2Dgraphics(1280, 960);
-            //}
+
 
 
         }
 
         private void LoadImageLibrary()
         {
-            
-
             _textureManager.LoadTexture("face", @"Assets\face.tif");
             _textureManager.LoadTexture("alphaface", @"Assets\face_alpha.tif");
+            _textureManager.LoadTexture("font", @"Assets\font.tif");
+
         }
 
         private void LoadStateSystem()
@@ -91,19 +81,13 @@ namespace GameLoop
             _system.AddState("titleMenu", new TitleSplashScreen(_system));
             _system.AddState("sprite", new DrawSpriteState(_textureManager));
             _system.AddState("TestSprite", new TestSpriteClassState(_textureManager));
+            _system.AddState("TextTest", new TextRenderState(_textureManager));
         }
-
-        //void GameLoop(double elapsedTime)
-        //{
-        //    _system.Update(elapsedTime);
-        //    _system.Render();
-
-        //}
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
-
+            GL.LoadIdentity();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo_screen);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

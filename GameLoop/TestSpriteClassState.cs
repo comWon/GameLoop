@@ -19,14 +19,14 @@ namespace GameLoop
         public TestSpriteClassState(TextureManager textureManager)
         {
             _textureManager = textureManager;
-            _testSprite.Texture = _textureManager.Get("alphaface");
+            _testSprite.Texture = _textureManager.Get("face");
             _testSprite.SetHeight(15);
             _testSprite.SetWidth(15);
 
             _testSprite2.Texture = _textureManager.Get("alphaface");
             _testSprite2.SetHeight(200);
             _testSprite2.SetWidth(200);
-            _testSprite2.SetColor(new Color(1, 0, 0, (float)0.2));
+            _testSprite2.SetColor(new Color(1, 0, 0, (float)1));
         }
 
         public void Render()

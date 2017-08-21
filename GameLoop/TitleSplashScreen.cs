@@ -11,7 +11,7 @@ namespace GameLoop
     {
         StateSystem _system;
         double _currentRotation = 0;
-        double _Multiplier = 50;
+        double _Multiplier = 90;
         public TitleSplashScreen(StateSystem system)
         {
             _system = system;
@@ -20,7 +20,7 @@ namespace GameLoop
         #region Interface objects
         public void Render()
         {
-            //White Screen (Check colours 1-256 or 0 to 255?)
+            
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 

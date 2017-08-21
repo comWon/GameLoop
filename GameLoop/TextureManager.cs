@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OpenGL;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
-using DevILSharp;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -15,9 +13,8 @@ namespace GameLoop
     class TextureManager : IDisposable
     {
         Dictionary<string, Texture> _textureDatabase = new Dictionary<string, Texture>();
-        int tempx;
-        int tempy;
-
+  
+        Bitmap bmpImg;
         public Texture Get(string textureId)
         {
             return _textureDatabase[textureId];
@@ -26,51 +23,57 @@ namespace GameLoop
         public void LoadTexture(string imageId, string imagePath)
         {
             Texture t = new Texture();
+            int[] img = loadImage(imagePath);
+            t.Id = img[0];
+            t.Width = img[1];
+            t.Height = img[2];
 
-            t.Id = loadImage(imagePath);
-            t.Width = tempx;
-            t.Height = tempy;
-
-            if(t.Id >= 0) //0 based Id's
+            if(t.Id > 0) 
             {
                 _textureDatabase.Add(imageId, t);
             }
-            tempx = 0;
-            tempy = 0;
 
         }
 
-         int  loadImage(Bitmap image)
+         int[]  loadImage(Bitmap image)
         {
-            int texID = GL.GenTexture();
+            int[] texIDa = new int[1];
+            GL.CreateTextures(TextureTarget.Texture2D, 1, texIDa);
+            Console.WriteLine(GL.GetError());
 
-            GL.BindTexture(OpenTK.Graphics.OpenGL.TextureTarget.Texture2D, texID);
-            BitmapData data = image.LockBits(new System.Drawing.Rectangle(0, 0, image.Width, image.Height),
+            int texID = texIDa[0];
+            Console.WriteLine(texID);
+
+            GL.BindTexture(TextureTarget.Texture2D,  texID);
+            Console.WriteLine(GL.GetError());
+            Console.WriteLine(GL.GetInteger(GetPName.TextureBinding2D));
+
+            BitmapData data = image.LockBits(new Rectangle(0, 0, image.Width, image.Height),
                 ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            GL.TexImage2D(OpenTK.Graphics.OpenGL.TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
-                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, OpenTK.Graphics.OpenGL.PixelType.UnsignedByte, data.Scan0);
 
-            tempx = image.Width;
-            tempy = image.Height;
-
+            GL.TexImage2D( TextureTarget.Texture2D,  0,  PixelInternalFormat.Rgba,  data.Width,  data.Height,  0,  OpenTK.Graphics.OpenGL.PixelFormat.Bgra,  PixelType.UnsignedByte,  data.Scan0);
+            
             image.UnlockBits(data);
 
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-
-            return texID;
+           
+           
+            return new int[] { texID, image.Width, image.Height } ;
         }
 
-        int loadImage(string filename)
+        int[] loadImage(string filename)
         {
             try
             {
-                Bitmap file = new Bitmap(filename);
-                return loadImage(file);
+                bmpImg = new Bitmap(filename);
+                return loadImage(bmpImg);
             }
             catch (FileNotFoundException e)
             {
-                return -1;
+                return new int [] { -1,0,0};
             }
         }
 
