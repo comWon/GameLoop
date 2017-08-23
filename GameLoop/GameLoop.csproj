@@ -35,10 +35,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevILSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevILSharp.0.0.13\lib\net45\DevILSharp.dll</HintPath>
-    </Reference>
     <Reference Include="FSharp.Core, Version=4.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="OpenGL.Net, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenGL.Net.0.5.2\lib\net461\OpenGL.Net.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>

@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
+
 namespace GameLoop
 {
     class TextureManager : IDisposable
@@ -22,6 +23,7 @@ namespace GameLoop
 
         public void LoadTexture(string imageId, string imagePath)
         {
+          
             Texture t = new Texture();
             int[] img = loadImage(imagePath);
             t.Id = img[0];
@@ -37,12 +39,15 @@ namespace GameLoop
 
          int[]  loadImage(Bitmap image)
         {
-            int[] texIDa = new int[1];
-            GL.CreateTextures(TextureTarget.Texture2D, 1, texIDa);
-            Console.WriteLine(GL.GetError());
 
-            int texID = texIDa[0];
-            Console.WriteLine(texID);
+            //int[] texIDa = new int[1];
+            //GL.CreateTextures(TextureTarget.Texture2D, 1, texIDa);
+            //Console.WriteLine(GL.GetError());
+
+            //int texID = texIDa[0];
+            //Console.WriteLine(texID);
+
+            int texID = GL.GenTexture();
 
             GL.BindTexture(TextureTarget.Texture2D,  texID);
             Console.WriteLine(GL.GetError());

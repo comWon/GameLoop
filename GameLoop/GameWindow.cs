@@ -16,11 +16,15 @@ namespace GameLoop
 {
     public class GameWindow : OpenTK.GameWindow
     {
-        //FastLoop _fastLoop;
+        
         PreciseTimer preciseTimer = new PreciseTimer();
+        //Screen Settings
+        int _ScreenX = 1920;
+        int _ScreenY = 1080;
+        bool _fullScreen = false;
+        private bool _resourcesLoaded = false;
+        
 
-        bool _fullscreen = false;
-        private bool resourcesLoaded = false;
 
         float time = 0.0f;
         private const int MAX_LIGHTS = 5;
@@ -44,7 +48,8 @@ namespace GameLoop
 
             GL.ClearColor(new Color4(0, 0, 128, 0));
             GL.Clear(ClearBufferMask.ColorBufferBit);
-
+            GL.Enable(EnableCap.Texture2D);
+            
             LoaderManager();
         }
 
@@ -52,9 +57,11 @@ namespace GameLoop
         {
 
             //Graphics loader
-            SetUp2Dgraphics(1280, 960);
-            LoadImageLibrary();
 
+            _ScreenX = ClientSize.Height;
+            _ScreenY = ClientSize.Width;
+            SetUp2Dgraphics(_ScreenX, _ScreenY);
+            LoadImageLibrary();
             //Generate Working Properties
 
             LoadStateSystem();
@@ -106,11 +113,14 @@ namespace GameLoop
         {
             double halfWidth = width / 2;
             double halfHeight = height / 2;
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -100, 100);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
+            
+            GL.Viewport(0, 0, (int)height, (int)width);
+            //GL.MatrixMode(MatrixMode.Projection);
+           // GL.LoadIdentity();
+//            GL.Ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -100, 100);
+            //GL.MatrixMode(MatrixMode.Modelview);
+          //  GL.LoadIdentity();
+            
         }
     }
 }
