@@ -19,6 +19,8 @@ namespace GameLoop
         Font _font;
         Text _header;
 
+        Circle _Marker = new Circle();
+        private double _maxPulse=200;
 
         public TestSpriteClassState(TextureManager textureManager)
         {
@@ -27,29 +29,42 @@ namespace GameLoop
             _testSprite.SetHeight(15);
             _testSprite.SetWidth(15);
 
-            _testSprite2.Texture = _textureManager.Get("alphaface");
+            _testSprite2.Texture = _textureManager.Get("face");
             _testSprite2.SetHeight(200);
             _testSprite2.SetWidth(200);
             _testSprite2.SetColor(new Color(1, 0, 0, (float)1));
 
-            _font = new Font(textureManager.Get("font"),
-    FontParser.Parse(@"Assets\font.fnt"));
+            _font = new Font(texture: textureManager.Get("font"),
+                            characterData: FontParser.Parse(@"Assets\font.fnt"));
+
             _header = new Text("Hello", _font);
-            _header.SetScale(.25);
+            _header.SetScale(1);
             _header.Position(-150, -50);
+
+            _Marker = new Circle(_testSprite.GetPosition(), _maxPulse / 2)
+            {
+                Color = new Color(1.0f, 0.0f, 0.0f, 1.0f)
+            };
+
         }
+
+        public Input Input { get; internal set; }
 
         public void Render()
         {
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             GL.Clear( ClearBufferMask.ColorBufferBit );
 
-            //Need to render batches 1 text at a time
+            //None Textured bits 
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            _Marker.Draw();
+
+            //Need to render batches 1 texture at a time
             GL.BindTexture(TextureTarget.Texture2D, _testSprite2.Texture.Id);
             _renderer.DrawSprite(_testSprite2);
-            //_renderer.Render();
+            _renderer.Render();
 
-            //GL.BindTexture(TextureTarget.Texture2D, _testSprite.Texture.Id);
+            GL.BindTexture(TextureTarget.Texture2D, _testSprite.Texture.Id);
             _renderer.DrawSprite(_testSprite);
             _renderer.Render();
 
@@ -78,9 +93,9 @@ namespace GameLoop
             } else
             {
                 _Pulse += elapsedTime * 100;
-                if (_Pulse > 200)
+                if (_Pulse > _maxPulse)
                 {
-                    _Pulse = 200;
+                    _Pulse = _maxPulse;
                     _Direction = -1;
                 }
             }

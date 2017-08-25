@@ -11,6 +11,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using OpenTK.Platform;
 using OpenTK;
+using OpenTK.Input;
 
 namespace GameLoop
 {
@@ -23,15 +24,16 @@ namespace GameLoop
         int _ScreenY = 1080;
         bool _fullScreen = false;
         private bool _resourcesLoaded = false;
-        
+        private bool _imageLibraryLoaded = false;
+
+        //INput Controls
+        Input _input = new Input();
+        MouseDevice mouse = new MouseDevice();
 
 
         float time = 0.0f;
         private const int MAX_LIGHTS = 5;
 
-        /// <summary>
-        /// Width/Height of the texture for the TV screen
-        /// </summary>
         const int TextureSize = 256;
         private int fbo_screen;
 
@@ -50,6 +52,8 @@ namespace GameLoop
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.Enable(EnableCap.Texture2D);
             
+           
+
             LoaderManager();
         }
 
@@ -62,6 +66,8 @@ namespace GameLoop
             _ScreenY = ClientSize.Width;
             SetUp2Dgraphics(_ScreenX, _ScreenY);
             LoadImageLibrary();
+
+
             //Generate Working Properties
 
             LoadStateSystem();
@@ -80,6 +86,7 @@ namespace GameLoop
             _textureManager.LoadTexture("alphaface", @"Assets\face_alpha.tif");
             _textureManager.LoadTexture("font", @"Assets\font.tif");
 
+            _imageLibraryLoaded = true;
         }
 
         private void LoadStateSystem()
@@ -87,8 +94,11 @@ namespace GameLoop
             _system.AddState("splash", new SplashScreen(_system));
             _system.AddState("titleMenu", new TitleSplashScreen(_system));
             _system.AddState("sprite", new DrawSpriteState(_textureManager));
-            _system.AddState("TestSprite", new TestSpriteClassState(_textureManager));
+            _system.AddState("TestSprite", new TestSpriteClassState(_textureManager) { Input = _input });
             _system.AddState("TextTest", new TextRenderState(_textureManager));
+            _system.AddState("Bounce", new CharacterBounceState(_textureManager));
+
+            _resourcesLoaded = true;
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -96,11 +106,21 @@ namespace GameLoop
             base.OnRenderFrame(e);
           //  GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo_screen);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+            GenericUpdate();
             _system.Update(preciseTimer.GetElapsedTime());
             _system.Render(); //fbo_screen
             SwapBuffers();
         }
+
+        private void GenericUpdate()
+        {
+            //   throw new NotImplementedException();
+            _input.MousePosition = new Point(
+                mouse.X - this.Size.Width / 2,
+                mouse.Y - this.Size.Height / 2
+                );
+                
+                }
 
         protected override void OnResize(EventArgs e)
         {
@@ -114,13 +134,13 @@ namespace GameLoop
             double halfWidth = width / 2;
             double halfHeight = height / 2;
             
-            GL.Viewport(0, 0, (int)height, (int)width);
-            //GL.MatrixMode(MatrixMode.Projection);
-           // GL.LoadIdentity();
-//            GL.Ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -100, 100);
-            //GL.MatrixMode(MatrixMode.Modelview);
-          //  GL.LoadIdentity();
-            
+            //GL.Viewport(0, 0, (int)height, (int)width);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -100, 100);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+
         }
     }
 }

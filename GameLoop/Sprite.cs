@@ -12,6 +12,7 @@ namespace GameLoop
         Color[] _vertexColors = new Color[VertexAmount];
         Point[] _vertexUVs = new Point[VertexAmount];
         Texture _texture = new Texture();
+        float _scale = 1;
 
         public Sprite()
         {
@@ -19,7 +20,26 @@ namespace GameLoop
             SetColor(new Color(1, 1, 1, 1));
             SetUVs(new Point(0, 0), new Point(1, 1));
         }
-
+        /// <summary>
+        /// Scale is always set relative to the origional Sprite, not any scaling factor that has been applied since 
+        /// By default that is the size of the Texture
+        /// </summary>
+        /// <param name="scale">Scale Factor 1=Origional 0<x<1 smaller, >1 Larger</param>
+        public void SetScale (float scale)
+        {
+            if (scale > 0)
+            {
+                float oldScale = _scale;
+                _scale = scale;
+                SetWidth((float)GetWidth() * _scale / oldScale);
+                SetHeight((float)GetHeight() * _scale / oldScale);
+            }
+            else
+            {
+                Exception e = new Exception("Invalid Scale Declared");
+                throw e;
+            }
+        }
         public Texture Texture
         {
             get { return _texture; }
@@ -88,12 +108,12 @@ namespace GameLoop
             return _vertexPositions[0].Y - _vertexPositions[2].Y;
         }
 
-        public void SetWidth(double width)
+        public void SetWidth(float width)
         {
             InitVertexPositions(GetCenter(), width, GetHeight());
         }
 
-        public void SetHeight(double height)
+        public void SetHeight(float height)
         {
             InitVertexPositions(GetCenter(), GetWidth(), height);
         }
@@ -130,10 +150,10 @@ namespace GameLoop
 
         }
 
-        public void SetScale (double v)
+        public Vector GetPosition()
         {
-            SetHeight(GetHeight() * v);
-            SetWidth(GetWidth() * v);
+            return GetCenter();
         }
+
     }
 }

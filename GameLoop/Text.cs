@@ -91,7 +91,7 @@ namespace GameLoop
                 foreach (char c in wordWithSpace)
                 {
                     CharacterSprite sprite = _font.CreateSprite(c);
-                    sprite.Sprite.SetScale(_scale);
+                    sprite.Sprite.SetScale((float)_scale);
                     float xOffset = ((float)sprite.Data.XOffset*(float)_scale) / 2;
                     float yOffset = (((float)sprite.Data.Height * (float)_scale) * 0.5f) + ((float)sprite.Data.YOffset * (float)_scale);
                     sprite.Sprite.SetPosition(x + currentX + xOffset, y - currentY - yOffset);
