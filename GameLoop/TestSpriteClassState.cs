@@ -57,7 +57,17 @@ namespace GameLoop
 
             //None Textured bits 
             GL.BindTexture(TextureTarget.Texture2D, 0);
-            _Marker.Draw();
+            if (_Marker.Intersects(Input.MousePosition))
+            {
+                _Marker.Color = new Color(0, 1, 0, 1);
+                _testSprite2.SetColor(new Color(0, 1, 0, 1));
+            }
+            else
+            {
+                _Marker.Color = new Color(1, 0, 0, 1);
+                _testSprite2.SetColor(new Color(1, 0, 0, 1));
+            }
+                _Marker.Draw();
 
             //Need to render batches 1 texture at a time
             GL.BindTexture(TextureTarget.Texture2D, _testSprite2.Texture.Id);

@@ -17,6 +17,11 @@ namespace GameLoop
             X = x;
             Y = y;
         }
+
+        public override string ToString()
+        {
+            return "X:" + X.ToString() + ",    Y:" + Y.ToString();
+        }
     }
 
 }

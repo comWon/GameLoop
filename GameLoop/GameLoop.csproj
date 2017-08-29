@@ -69,6 +69,7 @@
     <Compile Include="Circle.cs" />
     <Compile Include="CircleIntersectionState.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="coOrdMatchStatecs.cs" />
     <Compile Include="DrawSpriteState.cs" />
     <Compile Include="FastLoop.cs" />
     <Compile Include="Font.cs" />

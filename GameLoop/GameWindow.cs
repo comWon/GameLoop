@@ -67,6 +67,10 @@ namespace GameLoop
             SetUp2Dgraphics(_ScreenX, _ScreenY);
             LoadImageLibrary();
 
+            //Input Devices
+
+            mouse = Mouse;
+            
 
             //Generate Working Properties
 
@@ -117,8 +121,10 @@ namespace GameLoop
             //   throw new NotImplementedException();
             _input.MousePosition = new Point(
                 mouse.X - this.Size.Width / 2,
-                mouse.Y - this.Size.Height / 2
-                );
+                mouse.Y - this.Size.Height / 2);
+
+            Console.WriteLine(_input.MousePosition.ToString())
+            ;
                 
                 }
 
