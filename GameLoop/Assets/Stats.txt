@@ -1,0 +1,6 @@
+﻿Str,Strength,"How Hard you hit, and how hard you can be hit." ,1,1
+Dex, Dexterity, "How quickly and neatly you move",1,2
+Int, Intelligence, "how smart are you?",2,1
+Wis, Wisdom, "Applying whar you know.",2,2
+Cha, Charisma, "you sweet talker you", 3,1
+Man, Manipulation, "less honest interactions, l;ike lying to the cops or clearing out someones savings.",3,2

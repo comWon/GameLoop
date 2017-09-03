@@ -32,7 +32,10 @@ namespace GameLoop
             get { return _bitmapText; }
         }
 
-
+        public Point Center { get
+            {
+                return new Point((float)(_topX + Height / 2), (float) (_topY + this.Width / 2));
+            } }
         public Text(string text, Font font) : this(text, font, -1) { }
         public Text(string text, Font font, int maxWidth)
         {

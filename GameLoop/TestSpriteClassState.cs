@@ -22,6 +22,8 @@ namespace GameLoop
         Circle _Marker = new Circle();
         private double _maxPulse=200;
 
+        lRectangle TextBox = new lRectangle();
+
         public TestSpriteClassState(TextureManager textureManager)
         {
             _textureManager = textureManager;
@@ -46,6 +48,10 @@ namespace GameLoop
                 Color = new Color(1.0f, 0.0f, 0.0f, 1.0f)
             };
 
+            TextBox.Center = new Vector(-150+_header.Height / 2 ,-50+ _header.Width / 2 , 0);
+            TextBox.Height = _header.Height + 10.0;
+            TextBox.Width = _header.Width + 10.0;
+                
         }
 
         public Input Input { get; internal set; }
@@ -54,6 +60,12 @@ namespace GameLoop
         {
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             GL.Clear( ClearBufferMask.ColorBufferBit );
+
+            //And Text render from here
+            GL.BindTexture(TextureTarget.Texture2D, _textureManager.Get("font").Id);
+            _renderer.DrawText(_header);
+            _renderer.Render();
+
 
             //None Textured bits 
             GL.BindTexture(TextureTarget.Texture2D, 0);
@@ -69,6 +81,13 @@ namespace GameLoop
             }
                 _Marker.Draw();
 
+            //Recalc TextBox
+            TextBox.Center = new Vector(_header.Center.X, _header.Center.Y, 0);
+            TextBox.Height = _header.Height + 10.0;
+            TextBox.Width = _header.Width + 10.0;
+
+            TextBox.Draw();
+
             //Need to render batches 1 texture at a time
             GL.BindTexture(TextureTarget.Texture2D, _testSprite2.Texture.Id);
             _renderer.DrawSprite(_testSprite2);
@@ -78,10 +97,9 @@ namespace GameLoop
             _renderer.DrawSprite(_testSprite);
             _renderer.Render();
 
-            //And Text render from here
-            GL.BindTexture(TextureTarget.Texture2D, _textureManager.Get("font").Id);
-            _renderer.DrawText(_header);
-            _renderer.Render();
+
+
+
         }
 
         public void Render(int fbo_screen)
@@ -92,6 +110,22 @@ namespace GameLoop
 
         public void Update(double elapsedTime)
         {
+            //Check for move request
+            if (Input.MouseState[OpenTK.Input.MouseButton.Left])
+            {
+                if (_Marker.Intersects(Input.MousePosition))
+                {
+                    _testSprite.SetPosition(new Vector(Input.MousePosition.X, Input.MousePosition.Y, 0));
+                    _testSprite2.SetPosition(new Vector(Input.MousePosition.X, Input.MousePosition.Y, 0));
+                    _Marker = new Circle(new Vector(Input.MousePosition.X, Input.MousePosition.Y, 0), _maxPulse/2);
+                    _Pulse = _maxPulse;
+                    _Direction = -1;
+
+                }
+            }
+
+            //Pulse markers
+
             if (_Direction == -1)
             {
                 _Pulse -= elapsedTime * 100;

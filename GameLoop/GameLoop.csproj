@@ -63,9 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Batch.cs" />
+    <Compile Include="Character.cs" />
     <Compile Include="CharacterBounceState.cs" />
     <Compile Include="CharacterData.cs" />
     <Compile Include="CharacterSprite.cs" />
+    <Compile Include="CharFeats.cs" />
+    <Compile Include="CharSkills.cs" />
+    <Compile Include="CharStats.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleIntersectionState.cs" />
     <Compile Include="Color.cs" />
@@ -83,9 +87,12 @@
     <Compile Include="PreciseTimer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rectangle.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="Stat.cs" />
+    <Compile Include="StateCharWindow.cs" />
     <Compile Include="StateSystem.cs" />
     <Compile Include="TestSpriteClassState.cs" />
     <Compile Include="Text.cs" />
@@ -129,6 +136,8 @@
     <Content Include="Assets\face_alpha.tif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Stats.txt" />
+    <Content Include="Assets\StatSet.txt" />
     <None Include="Assets\font.tif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

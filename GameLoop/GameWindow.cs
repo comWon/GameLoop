@@ -20,8 +20,8 @@ namespace GameLoop
         
         PreciseTimer preciseTimer = new PreciseTimer();
         //Screen Settings
-        int _ScreenX = 1920;
-        int _ScreenY = 1080;
+        static int _ScreenX = 1920;
+        static int _ScreenY = 1080;
         bool _fullScreen = false;
         private bool _resourcesLoaded = false;
         private bool _imageLibraryLoaded = false;
@@ -41,14 +41,27 @@ namespace GameLoop
         StateSystem _system = new StateSystem();
         TextureManager _textureManager = new TextureManager();
 
+        public GameWindow()     : base(_ScreenX, // initial width
+        _ScreenY, // initial height
+        GraphicsMode.Default,
+        "GenericTitle",  // initial title
+        GameWindowFlags.Fullscreen,
+        DisplayDevice.Default,
+        4, // OpenGL major version
+        0, // OpenGL minor version
+        GraphicsContextFlags.ForwardCompatible)
+{
+    Title += ": OpenGL Version: " + GL.GetString(StringName.Version);
+            GL.Viewport(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+        }
 
-        protected override void OnLoad(EventArgs e)
+
+    protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
-            Title = "Generic Title";
 
-            GL.ClearColor(new Color4(0, 0, 128, 0));
+            GL.ClearColor(new Color4(0, 0, 128, 256));
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.Enable(EnableCap.Texture2D);
             
@@ -62,8 +75,9 @@ namespace GameLoop
 
             //Graphics loader
 
-            _ScreenX = ClientSize.Height;
-            _ScreenY = ClientSize.Width;
+             ClientSize = new Size( _ScreenX,_ScreenY );
+           // Cli.Location = new System.Drawing.Point(0, 0);
+                
             SetUp2Dgraphics(_ScreenX, _ScreenY);
             LoadImageLibrary();
 
@@ -121,11 +135,17 @@ namespace GameLoop
             //   throw new NotImplementedException();
             _input.MousePosition = new Point(
                 mouse.X - this.Size.Width / 2,
-                mouse.Y - this.Size.Height / 2);
-
+                 this.Size.Height / 2- mouse.Y );
+            _input.KeyboardState = OpenTK.Input.Keyboard.GetState();
+            _input.MouseState = OpenTK.Input.Mouse.GetState();
             Console.WriteLine(_input.MousePosition.ToString())
             ;
-                
+            
+            //Test for escape to  force exit
+            if (_input.KeyboardState.IsKeyDown(Key.Escape))
+            {
+                Exit();
+            }
                 }
 
         protected override void OnResize(EventArgs e)

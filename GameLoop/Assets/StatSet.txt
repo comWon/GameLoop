@@ -1,0 +1,3 @@
+﻿Physical,1
+Mental, 2
+Social, 3
