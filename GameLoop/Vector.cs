@@ -10,6 +10,8 @@ namespace GameLoop
 public struct Vector
 {
     public static readonly Vector Zero = new Vector(0, 0, 0);
+
+
         public double X { get; set; }
         public double Y { get; set; }
         public double Z { get; set; }
@@ -21,6 +23,11 @@ public struct Vector
             X = x;
             Y = y;
             Z = z;
+        }
+
+        public Vector(Point cn) : this (cn.X, cn.Y,0)
+        {
+            
         }
 
         public double Length()

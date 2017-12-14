@@ -76,6 +76,7 @@
     <Compile Include="coOrdMatchStatecs.cs" />
     <Compile Include="DrawSpriteState.cs" />
     <Compile Include="FastLoop.cs" />
+    <Compile Include="FloorPlan.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="FontParser.cs" />
     <Compile Include="FPSTestState.cs" />
@@ -83,12 +84,14 @@
     <Compile Include="GameWindow.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="PlayerObject.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="PreciseTimer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="Renderer.cs" />
+    <Compile Include="RoomObj.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Stat.cs" />

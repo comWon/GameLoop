@@ -17,7 +17,7 @@ namespace GameLoop
 {
     public class GameWindow : OpenTK.GameWindow
     {
-        
+
         PreciseTimer preciseTimer = new PreciseTimer();
         //Screen Settings
         static int _ScreenX = 1920;
@@ -41,7 +41,7 @@ namespace GameLoop
         StateSystem _system = new StateSystem();
         TextureManager _textureManager = new TextureManager();
 
-        public GameWindow()     : base(_ScreenX, // initial width
+        public GameWindow() : base(_ScreenX, // initial width
         _ScreenY, // initial height
         GraphicsMode.Default,
         "GenericTitle",  // initial title
@@ -50,13 +50,13 @@ namespace GameLoop
         4, // OpenGL major version
         0, // OpenGL minor version
         GraphicsContextFlags.ForwardCompatible)
-{
-    Title += ": OpenGL Version: " + GL.GetString(StringName.Version);
+        {
+            Title += ": OpenGL Version: " + GL.GetString(StringName.Version);
             GL.Viewport(0, 0, this.ClientSize.Width, this.ClientSize.Height);
         }
 
 
-    protected override void OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
@@ -64,8 +64,8 @@ namespace GameLoop
             GL.ClearColor(new Color4(0, 0, 128, 256));
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.Enable(EnableCap.Texture2D);
-            
-           
+
+
 
             LoaderManager();
         }
@@ -74,27 +74,16 @@ namespace GameLoop
         {
 
             //Graphics loader
-
-             ClientSize = new Size( _ScreenX,_ScreenY );
-           // Cli.Location = new System.Drawing.Point(0, 0);
-                
+            ClientSize = new Size(_ScreenX, _ScreenY);
+            // Cli.Location = new System.Drawing.Point(0, 0);
             SetUp2Dgraphics(_ScreenX, _ScreenY);
             LoadImageLibrary();
-
             //Input Devices
-
             mouse = Mouse;
-            
-
             //Generate Working Properties
-
             LoadStateSystem();
-
             //Start StateSystem (splash screen)
-            _system.ChangeState("TestSprite");
-
-
-
+            _system.ChangeState("Floor");
 
         }
 
@@ -115,6 +104,7 @@ namespace GameLoop
             _system.AddState("TestSprite", new TestSpriteClassState(_textureManager) { Input = _input });
             _system.AddState("TextTest", new TextRenderState(_textureManager));
             _system.AddState("Bounce", new CharacterBounceState(_textureManager));
+            _system.AddState("Floor", new FloorPlan(_textureManager) { Input = _input });
 
             _resourcesLoaded = true;
         }
@@ -122,7 +112,7 @@ namespace GameLoop
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
-          //  GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo_screen);
+            //  GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo_screen);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GenericUpdate();
             _system.Update(preciseTimer.GetElapsedTime());
@@ -135,18 +125,18 @@ namespace GameLoop
             //   throw new NotImplementedException();
             _input.MousePosition = new Point(
                 mouse.X - this.Size.Width / 2,
-                 this.Size.Height / 2- mouse.Y );
+                 -(this.Size.Height / 2 - mouse.Y));
             _input.KeyboardState = OpenTK.Input.Keyboard.GetState();
             _input.MouseState = OpenTK.Input.Mouse.GetState();
             Console.WriteLine(_input.MousePosition.ToString())
             ;
-            
+
             //Test for escape to  force exit
             if (_input.KeyboardState.IsKeyDown(Key.Escape))
             {
                 Exit();
             }
-                }
+        }
 
         protected override void OnResize(EventArgs e)
         {
@@ -159,7 +149,7 @@ namespace GameLoop
         {
             double halfWidth = width / 2;
             double halfHeight = height / 2;
-            
+
             //GL.Viewport(0, 0, (int)height, (int)width);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();

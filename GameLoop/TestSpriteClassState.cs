@@ -18,7 +18,7 @@ namespace GameLoop
 
         Font _font;
         Text _header;
-
+        Text _position;
         Circle _Marker = new Circle();
         private double _maxPulse=200;
 
@@ -41,14 +41,18 @@ namespace GameLoop
 
             _header = new Text("Hello", _font);
             _header.SetScale(1);
-            _header.Position(-150, -50);
+            _header.Position(0, 0);
+
+            _position = new Text("x: 0, y: 0", _font);
+            _position.SetScale(1);
+            _position.Position(0,0);
 
             _Marker = new Circle(_testSprite.GetPosition(), _maxPulse / 2)
             {
                 Color = new Color(1.0f, 0.0f, 0.0f, 1.0f)
             };
 
-            TextBox.Center = new Vector(-150+_header.Height / 2 ,-50+ _header.Width / 2 , 0);
+            TextBox.Center = new Vector(_header.Height / 2 , _header.Width / 2 , 0); //-150+_header.Height / 2 ,-50+ _header.Width / 2 , 0)
             TextBox.Height = _header.Height + 10.0;
             TextBox.Width = _header.Width + 10.0;
                 
@@ -66,6 +70,7 @@ namespace GameLoop
             _renderer.DrawText(_header);
             _renderer.Render();
 
+            _position = new Text("x: " + _testSprite.VertexPositions[0] + ", y: "+ _testSprite.VertexPositions[1], _font);
 
             //None Textured bits 
             GL.BindTexture(TextureTarget.Texture2D, 0);
